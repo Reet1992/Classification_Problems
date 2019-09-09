@@ -63,6 +63,13 @@ print(tab2)
 1-sum(diag(tab))/sum(tab)
 
 
+###naive bayes classifer####
+
+naive_bayes(df3$Housing,df3$Purpose,prior = NULL)
+
+plot(naive_bayes(df3$Housing,df3$Purpose,prior = NULL,laplace = 2))
+
+
 
 
 
