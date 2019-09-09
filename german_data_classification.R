@@ -28,9 +28,9 @@ train <- df3[pd==1,]
 validate <- df3[pd==2,]
 
 install.packages("partykit")
-library("party")
+library("partykit")
 
-tree <- ctree(Purpose~Duration+Credit.amount,data = train, controls = ctree_control(mincriterion = 0.99,minsplit = 5000))
+tree <- ctree(Purpose~Duration+Credit.amount,data = train, controls = ctree_control(mincriterion = 0.99,minsplit = 500))
 tree
 plot(tree)
 
@@ -43,6 +43,49 @@ tab <- table(predict(tree),train$Purpose)
 print(tab)  
 
 1-sum(diag(tab))/sum(tab)
+
+
+###R part 
+
+library(rpart)
+tree1 <- rpart(Purpose~Duration+Age,train)
+tree2 <- rpart(Purpose~Age+Job,train)
+library(rpart.plot)
+rpart.plot(tree1)
+rpart.plot(tree2)
+
+fg1 <- predict(tree1,validate,type = "prob")
+
+
+tab2 <- table(fg,train$Purpose)
+print(tab2)  
+
+1-sum(diag(tab))/sum(tab)
+
+
+
+
+
+
+####Knn classification###
+
+#set.seed(123) 
+#test <- 1:100
+
+#myvars <- c("duration", "Age", "Credit.Amount")
+#df3.subset <- data.frame(myvars)
+
+#train.df3 <- df3.subset[-test,]
+#test.df3 <- df3.subset[test,]
+
+#train.def <- df3$Job[-test]
+#test.def <- df3$Job[test]
+
+#library(class)
+
+#knn.1 <-  knn(train.df3, test.df3, train.def, k=1)
+
+
 
 
 
