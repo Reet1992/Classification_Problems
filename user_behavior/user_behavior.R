@@ -33,6 +33,7 @@ print(optCutOff)
 actuals_preds <- data.frame(cbind(actuals=validate$df.Clicked.on.Ad, predicteds=predicted))
 print(actuals_preds)
 
+
 correlation_accuracy <- cor(actuals_preds)
 correlation_accuracy
 
@@ -55,8 +56,12 @@ conf <- confusionMatrix(validate$df.Clicked.on.Ad, predicted, threshold = optCut
 
 conf
 
+accuracy <- ((conf$`0`[1]+conf$`1`[2])/(conf$`0`[1]+conf$`0`[2]+conf$`1`[1]+conf$`1`[2]))*100
+accuracy
+
 library(ggplot2)
 
 autoplot(conf, type = "mosaic")
-  
-conf$`1`
+
+library(ggcorrplot)
+ggcorrplot(conf)
